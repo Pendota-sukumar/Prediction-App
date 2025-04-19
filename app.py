@@ -12,20 +12,49 @@ uploaded_file = st.file_uploader("Upload CSV", type=["csv"])
 
 if uploaded_file:
     df = pd.read_csv(uploaded_file)
-    st.subheader("Preview of Data")
+    st.subheader("1️⃣ Preview of Data")
     st.write(df.head())
 
-    st.subheader("Statistical Summary")
+    st.subheader("2️⃣ Statistical Summary")
     st.write(df.describe())
 
-    st.subheader("Correlation Heatmap")
+    st.subheader("3️⃣ Correlation Heatmap")
     corr = df.corr(numeric_only=True)
     fig = plt.figure(figsize=(8,5))
     sns.heatmap(corr, annot=True, cmap="coolwarm")
     st.pyplot(fig)
 
-    st.subheader("Select Target Column")
-    target = st.selectbox("Target Column", df.columns)
+    st.subheader("4️⃣ Bar Chart")
+    categorical_cols = df.select_dtypes(include='object').columns
+    numeric_cols = df.select_dtypes(include='number').columns
+
+    if len(categorical_cols) > 0 and len(numeric_cols) > 0:
+        cat_col = st.selectbox("Choose a Categorical Column", categorical_cols)
+        num_col = st.selectbox("Choose a Numeric Column", numeric_cols)
+        bar_data = df.groupby(cat_col)[num_col].mean().sort_values(ascending=False)
+        st.bar_chart(bar_data)
+
+    st.subheader("5️⃣ Histogram")
+    hist_col = st.selectbox("Choose a Numeric Column for Histogram", numeric_cols)
+    fig = plt.figure()
+    sns.histplot(df[hist_col], kde=True)
+    st.pyplot(fig)
+
+    st.subheader("6️⃣ Box Plot")
+    box_col = st.selectbox("Choose a Numeric Column for Box Plot", numeric_cols, key="box")
+    fig = plt.figure()
+    sns.boxplot(x=df[box_col])
+    st.pyplot(fig)
+
+    st.subheader("7️⃣ Scatter Plot")
+    x_axis = st.selectbox("X-axis Column", numeric_cols, key="x_axis")
+    y_axis = st.selectbox("Y-axis Column", numeric_cols, key="y_axis")
+    fig = plt.figure()
+    sns.scatterplot(x=df[x_axis], y=df[y_axis])
+    st.pyplot(fig)
+
+    st.subheader("📈 Predictive Model")
+    target = st.selectbox("Select Target Column", df.columns)
 
     if target:
         df = df.dropna()
@@ -48,3 +77,4 @@ if uploaded_file:
             st.write("MSE:", mean_squared_error(y_test, y_pred))
         else:
             st.warning("Not enough numeric columns to perform prediction.")
+
