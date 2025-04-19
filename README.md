@@ -27,7 +27,7 @@ This is a **Machine Learning Web App** built using **Streamlit** that allows use
 
 ### 🚀 Live App
 
-👉 [Click here to view the live app](https://<your-streamlit-app-url>)  
+👉 [Click here to view the live app](https://prediction-app-mwty4pfojsmrrgmzirfbyj.streamlit.app/>) 
 _Replace this with your deployed Streamlit app link_
 
 ### 📁 How to Run Locally
