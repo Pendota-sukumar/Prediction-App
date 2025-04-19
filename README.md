@@ -41,4 +41,20 @@ cd Prediction-App
 pip install -r requirements.txt
 
 # Run the Streamlit app
+
+
+
+
+
+
+
+
+📦 Tech Stack
+Python
+
+Streamlit
+
+Pandas, Seaborn, Scikit-Learn, Matplotlib
+
+GitHub + Streamlit Cloud
 streamlit run app.py
